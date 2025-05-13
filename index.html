@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Stories App</title>
+    
+    <!-- PWA Manifest Link -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Theme Color für Browser-UI (Adressleiste etc.) -->
+    <meta name="theme-color" content="#444444">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Black Stories</h1>
+            <nav class="main-nav">
+                <button id="navShowCardButton" class="nav-tab-button active">Rätsel</button>
+                <button id="navShowFilterButton" class="nav-tab-button">Filter</button>
+                <button id="navShowEditorButton" class="nav-tab-button">Editor</button>
+                <button id="navShowManagementButton" class="nav-tab-button">Verwaltung</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Rätsel-Ansicht (Standard) -->
+            <div id="cardView" class="view-panel active-view">
+                <div class="story-display-area">
+                    <div class="card-container">
+                        <div class="card" id="storyCard">
+                            <div class="card-face card-front">
+                                <div class="card-header">
+                                    <h2 id="storyTitle">Titel des Rätsels</h2>
+                                    <div class="card-actions-front">
+                                        <span id="solvedIndicatorFront" class="solved-indicator-front"></span>
+                                        <button id="editStoryButtonCard" class="card-action-button" title="Rätsel bearbeiten">✏️</button>
+                                    </div>
+                                </div>
+                                <p class="difficulty" id="storyDifficulty">Schwierigkeit: Mittel</p>
+                                <p class="riddle-text" id="storyRiddle">Hier steht der Text des Rätsels...</p>
+                            </div>
+                            <div class="card-face card-back">
+                                <div class="card-header"> 
+                                    <h2 id="solutionTitle">Lösung</h2>
+                                </div>
+                                <p class="solution-text" id="storySolution">Hier steht die Lösung des Rätsels...</p>
+                                <div class="solved-marker">
+                                    <label for="solvedCheckbox">Gelöst:</label>
+                                    <input type="checkbox" id="solvedCheckbox">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="navigation-controls">
+                        <button id="prevStoryButton" class="nav-button">Vorheriges</button>
+                        <button id="nextStoryButton" class="nav-button">Nächstes</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter-Ansicht -->
+            <div id="filterView" class="view-panel">
+                <h3>Filtereinstellungen</h3>
+                <label for="difficultyFilter">Schwierigkeit:</label>
+                <select id="difficultyFilter">
+                    <option value="all">Alle</option>
+                    <option value="Leicht">Leicht</option>
+                    <option value="Mittel">Mittel</option>
+                    <option value="Schwer">Schwer</option>
+                </select>
+                <br>
+                <label for="solvedFilter">Status:</label>
+                <select id="solvedFilter">
+                    <option value="all">Alle</option>
+                    <option value="unsolved">Nur Ungelöste</option>
+                    <option value="solved">Nur Gelöste</option>
+                </select>
+                <div class="view-actions">
+                    <button id="applyFilterButton">Filter anwenden</button>
+                    <button class="close-view-button" data-targetview="filterView">Schließen</button>
+                </div>
+            </div>
+
+            <!-- Editor-Ansicht -->
+            <div id="editorView" class="view-panel">
+                <h3>Rätsel-Editor</h3>
+                <input type="hidden" id="editorStoryId">
+                <label for="editorTitle">Titel:</label>
+                <input type="text" id="editorTitle" placeholder="Titel des Rätsels">
+                
+                <label for="editorDifficulty">Schwierigkeit:</label>
+                <select id="editorDifficulty">
+                    <option value="Leicht">Leicht</option>
+                    <option value="Mittel" selected>Mittel</option>
+                    <option value="Schwer">Schwer</option>
+                </select>
+                
+                <label for="editorRiddle">Rätsel:</label>
+                <textarea id="editorRiddle" rows="5" placeholder="Rätseltext"></textarea>
+                
+                <label for="editorSolution">Lösung:</label>
+                <textarea id="editorSolution" rows="5" placeholder="Lösungstext"></textarea>
+                
+                <div class="view-actions editor-actions">
+                    <button id="saveStoryButton">Neues Rätsel speichern</button>
+                    <button id="deleteStoryButton" style="display:none;">Rätsel löschen</button>
+                    <button id="clearEditorButton">Felder leeren / Abbrechen</button>
+                    <button class="close-view-button" data-targetview="editorView">Schließen</button> 
+                </div>
+            </div>
+            
+            <!-- Verwaltungs-Ansicht -->
+            <div id="managementView" class="view-panel">
+                <h3>Verwaltung</h3>
+                <button id="exportStoriesButton">Alle Rätsel als JSON exportieren</button>
+                <br><br>
+                <label for="importFile" id="importFileLabel" class="button-like-label">Rätsel aus JSON importieren</label>
+                <input type="file" id="importFile" accept=".json, .js" style="display: none;">
+                <p id="importMessage" style="margin-top: 10px;"></p>
+                <div class="view-actions">
+                     <button class="close-view-button" data-targetview="managementView">Schließen</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2024 Glotz's Black Stories App</p>
+        </footer>
+    </div>
+
+    <script src="initial_stories.js"></script> 
+    <script src="script.js"></script>
+</body>
+</html>
